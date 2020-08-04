@@ -1,42 +1,29 @@
-import React, { useEffect } from "react";
-import { Spinner } from "react-spinkit";
+import React, { useEffect, useState } from "react";
+import Spinner from "react-spinkit";
 import "./login.css";
 import { auth } from "../../firebase";
-import {
-  loaded,
-  isLogIn,
-  setCredentials,
-} from "../../store/actions/loginAction";
+import { isLogIn, setCredentials } from "../../store/actions/loginAction";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 
-const Login = ({
-  mainuser,
-  isLoaded,
-  loaded,
-  email,
-  password,
-  isLogIn,
-  setCredentials,
-}) => {
+const Login = ({ mainuser, email, password, setCredentials }) => {
   const history = useHistory();
-  useEffect(() => {
-    loaded(isLoaded);
-  }, [loaded]);
+  const [isLoaded, setLoad] = useState(false);
+  // useEffect(() => {
+  //   if (mainuser) {
+  //   }
+  // }, [setLoad]);
   const handleChange = (e) => {
     setCredentials(e.currentTarget.name, e.currentTarget.value);
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoad(!isLoaded);
     try {
-      console.log(isLoaded);
-
-      isLogIn(await auth.signInWithEmailAndPassword(email, password));
+      await auth.signInWithEmailAndPassword(email, password);
       history.push("/");
-      loaded(true);
-      console.log(isLoaded);
     } catch (e) {
-      alert(e.message);
+      setLoad(isLoaded);
     }
   };
 
@@ -71,7 +58,19 @@ const Login = ({
             onChange={handleChange}
           />
           <div className="button">
-            <button className="btn btn-primary ">Login</button>
+            {!isLoaded && (
+              <button className="btn btn-primary">
+                {!isLoaded && <span>Login</span>}
+              </button>
+            )}
+            {isLoaded && (
+              <Spinner
+                name="ball-clip-rotate"
+                color="green"
+                fadeIn="none"
+                style={{ height: "1px" }}
+              />
+            )}
           </div>
         </div>
       </form>
@@ -80,15 +79,14 @@ const Login = ({
 };
 
 const mapStateToProps = (state, ownProps) => {
-  const { isLoaded, email, password, mainuser } = state.login;
+  const { email, password, mainuser } = state.login;
   return {
     email,
     password,
     mainuser,
-    isLoaded,
   };
 };
 
-const mapDispatchToProps = { isLogIn, setCredentials, loaded };
+const mapDispatchToProps = { isLogIn, setCredentials };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

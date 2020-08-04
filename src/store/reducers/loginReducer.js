@@ -3,12 +3,10 @@ import {
   ISLOGGEDOUT,
   SETCREDENTIALS,
   USERNAME,
-  LOADED,
 } from "../actions/type";
 
 const loginReducer = (
   state = {
-    isLoaded: false,
     mainuser: null,
     username: "",
     email: "",
@@ -32,11 +30,7 @@ const loginReducer = (
       newState2.username = action.payload.username;
       state = newState2;
       break;
-    case LOADED:
-      let newState4 = { ...state };
-      newState4.isLoaded = action.payload.isLoaded;
-      state = newState4;
-      break;
+
     case ISLOGGEDOUT:
       let newState3 = { ...state };
       newState3.mainuser = null;

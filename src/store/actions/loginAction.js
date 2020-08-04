@@ -1,10 +1,4 @@
-import {
-  USERNAME,
-  ISLOGGEDIN,
-  ISLOGGEDOUT,
-  SETCREDENTIALS,
-  LOADED,
-} from "./type";
+import { USERNAME, ISLOGGEDIN, ISLOGGEDOUT, SETCREDENTIALS } from "./type";
 
 export const setUserName = (username) => {
   return {
@@ -26,14 +20,6 @@ export const isLogOut = (mainuser) => {
     type: ISLOGGEDOUT,
     payload: {
       mainuser,
-    },
-  };
-};
-export const loaded = (isLoaded) => {
-  return {
-    type: LOADED,
-    payload: {
-      isLoaded,
     },
   };
 };

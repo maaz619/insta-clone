@@ -5,12 +5,7 @@ import "./header.css";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { loadPost } from "../store/actions/homeAction";
-import {
-  isLogIn,
-  isLogOut,
-  setUserName,
-  loaded,
-} from "../store/actions/loginAction";
+import { isLogIn, isLogOut, setUserName } from "../store/actions/loginAction";
 
 import { db } from "../firebase";
 import { auth } from "../firebase";
@@ -23,8 +18,6 @@ const Home = ({
   loadPost,
   post,
   username,
-  loaded,
-  isLoaded,
 }) => {
   useEffect(() => {
     db.collection("post").onSnapshot((snapshot) => {
@@ -34,7 +27,6 @@ const Home = ({
       if (authUser) {
         isLogIn(authUser);
         setUserName(authUser.displayName);
-        loaded(true);
       } else {
         console.log("Logged Out");
       }
@@ -46,7 +38,7 @@ const Home = ({
   const handleLogOut = () => {
     auth.signOut();
     isLogOut(null);
-    loaded(false);
+    setUserName();
   };
   return (
     <div className="home">
@@ -80,15 +72,14 @@ const Home = ({
 
 const mapStateToProps = (state, ownProps) => {
   const { post } = state.home;
-  const { mainuser, username, isLoaded } = state.login;
+  const { mainuser, username } = state.login;
   return {
     post,
     mainuser,
     username,
-    isLoaded,
   };
 };
 
-const mapDispatchToProps = { loadPost, isLogIn, isLogOut, setUserName, loaded };
+const mapDispatchToProps = { loadPost, isLogIn, isLogOut, setUserName };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

@@ -19,5 +19,3 @@ export const ISLOGGEDOUT = "isloggedout";
 export const SETPOST = "setpost";
 
 export const SETCREDENTIALS = "setCredentials";
-
-export const LOADED = "loaded";
