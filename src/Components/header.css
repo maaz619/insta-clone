@@ -1,0 +1,18 @@
+.header__container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  border-bottom: 1px solid lightgrey;
+}
+.header__image {
+  background-color: white;
+  object-fit: contain;
+}
+.link {
+  text-decoration: none;
+  color: inherit;
+}
+.link:hover {
+  color: inherit;
+}

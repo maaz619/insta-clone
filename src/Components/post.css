@@ -1,0 +1,22 @@
+.post__container {
+  border: 1px solid lightgray;
+  margin-bottom: 30px;
+}
+.post__image {
+  object-fit: contain;
+  width: 100%;
+  border-top: 1px solid lightgray;
+  border-bottom: 1px solid lightgray;
+}
+.post__text {
+  font-weight: normal;
+  padding: 15px;
+}
+.post__header {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+}
+.post__avatar {
+  margin-right: 10px;
+}
